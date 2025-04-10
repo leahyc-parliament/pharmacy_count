@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+postcode_to_new_constituency_UK.csv
+output_data/
