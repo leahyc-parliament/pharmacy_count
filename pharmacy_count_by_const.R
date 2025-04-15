@@ -1,4 +1,4 @@
-# install.packges("x")
+# install.packages("x")
 library(readr)
 library(dplyr)
 library(lubridate)
@@ -31,7 +31,7 @@ headers <- c("code_1",
              "code_12")
 
 # clean raw NHS data
-pharm <- read_csv("data/edispensary.csv", col_names = headers) |> 
+pharm <- read_csv("nhs_data/edispensary.csv", col_names = headers) |> 
   filter(`1=pharmacy`== 1) |>
   mutate(
     date_opened = ymd(date_opened), 
@@ -40,7 +40,7 @@ pharm <- read_csv("data/edispensary.csv", col_names = headers) |>
   )
 
 # select required columns
-pc <- read_csv("./postcode_to_new_constituency_UK.csv") |> 
+pc <- read_csv("geography_data/postcode_to_new_constituency_UK.csv") |> 
   select(pcds, `New constituency`)
 
 # join by postcode
@@ -84,6 +84,7 @@ if (!dir.exists("output_data")) {
 
 write.csv(results, "output_data/open_pharmacies_by_constituency.csv", row.names = FALSE)
 
-
+rows_with_na <- pharm_to_const %>%
+  filter(is.na(`New constituency`))
 
 
